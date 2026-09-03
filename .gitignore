@@ -1,0 +1,14 @@
+node_modules/
+.expo/
+.expo-shared/
+dist/
+web-build/
+*.log
+.env
+.env.*
+!.env.example
+
+# Expo and local editor files
+.DS_Store
+Thumbs.db
+.vscode/
