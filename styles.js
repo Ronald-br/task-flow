@@ -153,6 +153,44 @@ export const styles = StyleSheet.create({
     color: colors.white,
   },
 
+  // ---------- SELETOR DE PRIORIDADE (estado + evento) ----------
+  priorityRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    marginTop: 16,
+    gap: 8,
+  },
+  priorityLabel: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    marginRight: 4,
+    fontWeight: '600',
+  },
+  priorityChip: {
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 16,
+    backgroundColor: colors.card,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  priorityChipText: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    fontWeight: '600',
+  },
+  priorityChipTextActive: {
+    color: colors.white,
+  },
+  priorityDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginRight: 8,
+  },
+
   // ---------- INPUT PARA NOVA TAREFA ----------
   inputRow: {
     flexDirection: 'row',

@@ -6,7 +6,9 @@ import { styles } from '../styles';
 // justifyContent, alignItems) para organizar checkbox + texto + botão
 // de excluir. Veja o estilo "taskItem" em styles.js para os comentários
 // completos sobre o uso do Flexbox nesta seção.
-export default function TaskItem({ task, onToggle, onDelete }) {
+export default function TaskItem({ task, priorities, onToggle, onDelete }) {
+  const priorityInfo = priorities.find((p) => p.key === task.priority);
+
   return (
     <View style={styles.taskItem}>
       <View style={styles.taskLeft}>
@@ -16,6 +18,12 @@ export default function TaskItem({ task, onToggle, onDelete }) {
         >
           {task.done && <Text style={styles.checkboxMark}>✓</Text>}
         </TouchableOpacity>
+
+        {priorityInfo && (
+          <View
+            style={[styles.priorityDot, { backgroundColor: priorityInfo.color }]}
+          />
+        )}
 
         <Text
           style={[styles.taskText, task.done && styles.taskTextDone]}

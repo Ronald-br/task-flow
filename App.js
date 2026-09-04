@@ -19,24 +19,35 @@ const FILTERS = [
   { key: 'done', label: 'Concluídas' },
 ];
 
+const PRIORITIES = [
+  { key: 'baixa', label: 'Baixa', color: '#00C9A7' },
+  { key: 'media', label: 'Média', color: '#FFB020' },
+  { key: 'alta', label: 'Alta', color: '#FF5C5C' },
+];
+
 export default function App() {
   const [tasks, setTasks] = useState([
-    { id: '1', text: 'Estudar Flexbox no React Native', done: true },
-    { id: '2', text: 'Separar estilos em StyleSheet.create()', done: true },
-    { id: '3', text: 'Testar o app em telas diferentes', done: false },
-    { id: '4', text: 'Subir o projeto no GitHub', done: false },
+    { id: '1', text: 'Estudar Flexbox no React Native', done: true, priority: 'media' },
+    { id: '2', text: 'Separar estilos em StyleSheet.create()', done: true, priority: 'baixa' },
+    { id: '3', text: 'Testar o app em telas diferentes', done: false, priority: 'alta' },
+    { id: '4', text: 'Subir o projeto no GitHub', done: false, priority: 'media' },
   ]);
   const [newTask, setNewTask] = useState('');
   const [filter, setFilter] = useState('all');
+  // ESTADO 4: guarda a prioridade escolhida para a próxima tarefa a ser
+  // criada. É atualizado pelo evento de clique nos chips de prioridade
+  // (handlePriorityPress) e consumido quando a tarefa é adicionada.
+  const [newPriority, setNewPriority] = useState('media');
 
   const addTask = () => {
     const text = newTask.trim();
     if (!text) return;
     setTasks((prev) => [
-      { id: Date.now().toString(), text, done: false },
+      { id: Date.now().toString(), text, done: false, priority: newPriority },
       ...prev,
     ]);
     setNewTask('');
+    setNewPriority('media');
   };
 
   const toggleTask = (id) => {
@@ -143,6 +154,38 @@ export default function App() {
         ) : null}
       </View>
 
+      {/*
+        ESTADO 4 + EVENTO DE INTERAÇÃO: seletor de prioridade. Cada chip é
+        um TouchableOpacity; ao ser pressionado, chama setNewPriority(p.key)
+        (evento onPress), atualizando o estado newPriority. O chip
+        selecionado é destacado comparando newPriority === p.key.
+      */}
+      <View style={styles.priorityRow}>
+        <Text style={styles.priorityLabel}>Prioridade:</Text>
+        {PRIORITIES.map((p) => (
+          <TouchableOpacity
+            key={p.key}
+            style={[
+              styles.priorityChip,
+              newPriority === p.key && {
+                backgroundColor: p.color,
+                borderColor: p.color,
+              },
+            ]}
+            onPress={() => setNewPriority(p.key)}
+          >
+            <Text
+              style={[
+                styles.priorityChipText,
+                newPriority === p.key && styles.priorityChipTextActive,
+              ]}
+            >
+              {p.label}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
       {/* INPUT PARA NOVA TAREFA */}
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -169,7 +212,12 @@ export default function App() {
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContent}
         renderItem={({ item }) => (
-          <TaskItem task={item} onToggle={toggleTask} onDelete={deleteTask} />
+          <TaskItem
+            task={item}
+            priorities={PRIORITIES}
+            onToggle={toggleTask}
+            onDelete={deleteTask}
+          />
         )}
         ListEmptyComponent={
           <View style={styles.emptyState}>
