@@ -49,10 +49,6 @@ export const styles = StyleSheet.create({
   },
 
   // ---------- SEÇÃO 1 COM FLEXBOX CONSCIENTE: BARRA DE ESTATÍSTICAS ----------
-  // flexDirection 'row' + justifyContent 'space-between' distribuem os 3
-  // cartões de estatística uniformemente, e alignItems 'center' os alinha
-  // verticalmente. Cada cartão usa flex:1 para dividir o espaço igualmente
-  // e se adaptar a qualquer largura de tela.
   statsBar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -88,6 +84,40 @@ export const styles = StyleSheet.create({
     fontSize: isSmallScreen ? 10 : 12,
     color: colors.textSecondary,
     marginTop: 2,
+  },
+
+  // ---------- BANNER DE PARABÉNS (renderização condicional) ----------
+  congratsBanner: {
+    marginHorizontal: 20,
+    marginTop: 16,
+    backgroundColor: '#E6FBF6',
+    borderRadius: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderWidth: 1,
+    borderColor: colors.secondary,
+  },
+  congratsText: {
+    fontSize: isSmallScreen ? 13 : 14,
+    fontWeight: '600',
+    color: colors.primaryDark,
+    textAlign: 'center',
+  },
+
+  // ---------- BOTÃO LIMPAR CONCLUÍDAS (renderização condicional) ----------
+  clearButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 20,
+    backgroundColor: '#FFF1F1',
+    borderWidth: 1,
+    borderColor: colors.danger,
+    marginBottom: 8,
+  },
+  clearButtonText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: colors.danger,
   },
 
   // ---------- FILTROS (flexWrap para telas pequenas) ----------
@@ -167,11 +197,6 @@ export const styles = StyleSheet.create({
   },
 
   // ---------- SEÇÃO 2 COM FLEXBOX CONSCIENTE: ITEM DE TAREFA ----------
-  // flexDirection 'row' organiza checkbox + texto + botão de excluir lado a
-  // lado; justifyContent 'space-between' empurra o botão de excluir para a
-  // extremidade; alignItems 'center' alinha tudo verticalmente; o texto usa
-  // flex:1 para ocupar o espaço restante e quebrar linha em telas estreitas
-  // sem estourar o layout.
   taskItem: {
     flexDirection: 'row',
     alignItems: 'center',

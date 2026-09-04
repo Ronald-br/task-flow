@@ -49,6 +49,10 @@ export default function App() {
     setTasks((prev) => prev.filter((t) => t.id !== id));
   };
 
+  const clearCompleted = () => {
+    setTasks((prev) => prev.filter((t) => !t.done));
+  };
+
   const filteredTasks = tasks.filter((t) => {
     if (filter === 'pending') return !t.done;
     if (filter === 'done') return t.done;
@@ -89,6 +93,21 @@ export default function App() {
         </View>
       </View>
 
+      {/*
+        RENDERIZAÇÃO CONDICIONAL 1: o banner de parabéns só é renderizado
+        quando existe pelo menos uma tarefa (total > 0) E todas estão
+        concluídas (doneCount === total). Usamos "&&" para renderizar o
+        componente apenas quando a condição é verdadeira, senão nada é
+        exibido nesse espaço.
+      */}
+      {total > 0 && doneCount === total && (
+        <View style={styles.congratsBanner}>
+          <Text style={styles.congratsText}>
+            🎉 Você concluiu todas as suas tarefas!
+          </Text>
+        </View>
+      )}
+
       {/* FILTROS (row + flexWrap, se adapta a telas estreitas) */}
       <View style={styles.filterRow}>
         {FILTERS.map((f) => (
@@ -110,6 +129,18 @@ export default function App() {
             </Text>
           </TouchableOpacity>
         ))}
+
+        {/*
+          RENDERIZAÇÃO CONDICIONAL 2: usamos o operador ternário para
+          renderizar o botão "Limpar concluídas" apenas quando existe pelo
+          menos uma tarefa concluída (doneCount > 0). Se não houver
+          nenhuma, renderizamos "null" e nada aparece nesse lugar da tela.
+        */}
+        {doneCount > 0 ? (
+          <TouchableOpacity style={styles.clearButton} onPress={clearCompleted}>
+            <Text style={styles.clearButtonText}>Limpar concluídas</Text>
+          </TouchableOpacity>
+        ) : null}
       </View>
 
       {/* INPUT PARA NOVA TAREFA */}
